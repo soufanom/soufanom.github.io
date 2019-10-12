@@ -9,7 +9,19 @@ function sleep(milliseconds) {
   }
 }
 
-function traverseNet(sigInst) {
+function traverseNet(sigInst){
+  var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
+  viewNet(sigInst, state);
+  sleep(2000);
+  var state = ['red', 'red', 'red', 'blue', 'green', 'red'];
+  viewNet(sigInst, state);
+  sleep(2000);
+  var state = ['blue', 'blue', 'blue', 'blue', 'green', 'red'];
+  viewNet(sigInst, state);
+}
+
+function viewNet(sigInst, state) {
+  sigInst.graph.clear();
   $.getJSON('data.json', function (data) {
     var nodes = data['nodes'];
     var edges = data['edges'];
@@ -23,11 +35,12 @@ function traverseNet(sigInst) {
     }
     sigInst.refresh();
     
-    sleep(5000);
+    var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
+    var i = 0;
     sigInst.graph.nodes().forEach(function (n) {
-      n.color = colors[1];
+      n.color = state[i];
+      i = i + 1;
       sigInst.refresh();
-      sleep(1000);
     });
     
     var nodes = sigInst.graph.nodes();
