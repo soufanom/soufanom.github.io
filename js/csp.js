@@ -48,7 +48,6 @@ function viewNet(sigInst, state) {
     for (var j = 0; j < edges.length; j++) {
       sigInst.graph.addEdge(edges[j]);
     }
-    sigInst.refresh();
     
     sigma.plugins.animate(
         sigInst,
@@ -60,7 +59,7 @@ function viewNet(sigInst, state) {
           duration: 1000
         }
       );
-    sigInst.refresh();
+
     var nodes = sigInst.graph.nodes();
     var edges = sigInst.graph.edges();
     console.log(nodes);
