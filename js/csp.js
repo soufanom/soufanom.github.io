@@ -25,7 +25,8 @@ function traverseNet(g){
         minNodeSize: 0,
         maxNodeSize: 25,
         animationsTime: 1000
-      });
+      }
+  });
   
 
   var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
