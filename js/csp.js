@@ -1,4 +1,3 @@
-function traverseNet() {
-  var s = document.getElementById('container');
+function traverseNet(s) {
   console.log(s);
 }
