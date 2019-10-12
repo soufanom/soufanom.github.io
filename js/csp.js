@@ -75,7 +75,7 @@ class Map {
         this.V = vertices;
         this.graph = graph;
         this.solution = [];
-    } 
+    }
 
     // A utility function to check if the current color assignment 
     // is safe for vertex v 
@@ -135,26 +135,26 @@ class Map {
         for (var i = 0; i < m; i++) {
             var c = colors[i]
 
-			color[v] = c
-	                console.log(color);
-                this.solution.push([...color]);
+            color[v] = c
+            console.log(color);
+            this.solution.push([...color]);
             if (this.isSafe(v, color, c)) {
                 //backtrack-step: put 0 back to the assignment
                 break
             }
-            	console.log(color);
-                this.solution.push([...color]);
+            console.log(color);
+            this.solution.push([...color]);
         }
-                                    /* recur to assign colors to rest of the vertices */
-                if (this.graphColourUtil2(m, color, v + 1)) {
-                    return true;
-                }
+        /* recur to assign colors to rest of the vertices */
+        if (this.graphColourUtil2(m, color, v + 1)) {
+            return true;
+        }
 
         /* If no color can be assigned to this vertex 
          then return false */
         return false;
     }
-    
+
     graphColouringBTFC(m) {
         var color = []
         for (var i = 0; i < this.V; i++) {
@@ -211,7 +211,7 @@ function btGraphColoring() {
         if (i < solution.length) {
             viewMap(solution[i]);
             i++;
-            document.getElementById('steps').innerHTML = 'Number of steps is: '+i;
+            document.getElementById('steps').innerHTML = 'Number of steps is: ' + i;
         } else {
             clearInterval(interval);
         }
@@ -239,42 +239,13 @@ function btfcGraphColoring() {
         if (i < solution.length) {
             viewMap(solution[i]);
             i++;
-            document.getElementById('steps').innerHTML = 'Number of steps is: '+i;
+            document.getElementById('steps').innerHTML = 'Number of steps is: ' + i;
         } else {
             clearInterval(interval);
         }
     }, 750);
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
