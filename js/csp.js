@@ -18,10 +18,11 @@ function initNet(){
           }
       ],
       settings: {
-      defaultNodeColor: '#989898',
-      defaultLabelSize: 11,
-      minNodeSize: 0,
-      maxNodeSize: 25
+        defaultNodeColor: '#989898',
+        defaultLabelSize: 11,
+        minNodeSize: 0,
+        maxNodeSize: 25,
+        animationsTime: 1000
       }
   });
   return sigInst;
@@ -58,6 +59,17 @@ function viewNet(sigInst, state) {
       sigInst.graph.addEdge(edges[j]);
     }
     sigInst.refresh();
+    
+    sigma.plugins.animate(
+        sigInst,
+        {
+          color: state
+        },
+        {
+          easing: 'cubicInOut',
+          duration: 300
+        }
+      );
     
     var nodes = sigInst.graph.nodes();
     var edges = sigInst.graph.edges();
