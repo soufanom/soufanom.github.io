@@ -14,7 +14,7 @@
 <script src="js/sigma.parsers.json.min.js"></script>
 <script src="js/csp.js"></script>
 <script>
-  var s = sigma.parsers.json('data.json', {
+  sigma.parsers.json('data.json', {
     container: 'container',
     settings: {
       defaultNodeColor: '#989898',
@@ -23,7 +23,7 @@
       maxNodeSize: 10
     }
   });
-  traverseNet(s);
+  traverseNet();
 </script>
 </body>
 </html>
