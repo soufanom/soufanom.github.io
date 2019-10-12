@@ -28,20 +28,10 @@ function traverseNet(g){
       }
   });
   
+  var s = new sigma({
+    graph: g,
+    container: 'graph'
+  });
 
-  var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
-    
-   setInterval(function() {
-    sigma.plugins.animate(
-        s,
-        {
-          color: state
-        },
-        {
-          easing: 'cubicInOut',
-          duration: 1000
-        }
-      );
-  }, 2000);
   
 }
