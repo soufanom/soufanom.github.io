@@ -26,7 +26,7 @@
       defaultNodeColor: '#989898',
       defaultLabelSize: 11,
       minNodeSize: 0,
-      maxNodeSize: 30
+      maxNodeSize: 25
       }
   });
   
@@ -39,8 +39,8 @@
     for (var j = 0; j < edges.length; j++) {
       sigInst.graph.addEdge(edges[j]);
     }
+    sigInst.refresh();
   });
-  sigInst.refresh();
 
   traverseNet(sigInst);
 </script>
