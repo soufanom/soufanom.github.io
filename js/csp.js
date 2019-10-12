@@ -31,7 +31,7 @@ function traverseNet(sigInst) {
     });
     
     var nodes = sigInst.graph.nodes();
-    var edges = sigInst.graph.edges;
+    var edges = sigInst.graph.edges();
     console.log(nodes);
     console.log(edges);
     
