@@ -11,7 +11,7 @@
       "id": "NT",
       "label": "Northern Territory",
       "x": 1,
-      "y": -1.5,
+      "y": -1.2,
       "size": 20
     },
     {
@@ -39,7 +39,7 @@
       "id": "VIC",
       "label": "Victoria",
       "x": 3,
-      "y": 3,
+      "y": 2.5,
       "size": 20
     }
   ],
