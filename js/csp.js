@@ -33,12 +33,12 @@ function traverseNet(){
   var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
   viewNet(sigInst, state);
   sleep(2000);
-  sigInst.graph.clear();
+  sigInst.graph.clear(); sigInst = null;
   sigInst = initNet();
   var state = ['red', 'red', 'red', 'blue', 'green', 'red'];
   viewNet(sigInst, state);
   sleep(2000);
-  sigInst.graph.clear();
+  sigInst.graph.clear(); sigInst = null;
   sigInst = initNet();
   var state = ['blue', 'blue', 'blue', 'blue', 'green', 'red'];
   viewNet(sigInst, state);
@@ -48,9 +48,10 @@ function viewNet(sigInst, state) {
   $.getJSON('data.json', function (data) {
     var nodes = data['nodes'];
     var edges = data['edges'];
+    
     for (var i = 0; i < nodes.length; i++) {
       var nd = nodes[i];
-      nd.color = 'red';
+      nd.color = state[i];
       sigInst.graph.addNode(nd);
     }
     for (var j = 0; j < edges.length; j++) {
@@ -58,21 +59,9 @@ function viewNet(sigInst, state) {
     }
     sigInst.refresh();
     
-    var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
-    var i = 0;
-    sigInst.graph.nodes().forEach(function (n) {
-      n.color = state[i];
-      i = i + 1;
-      sigInst.refresh();
-    });
-    
     var nodes = sigInst.graph.nodes();
     var edges = sigInst.graph.edges();
     console.log(nodes);
     console.log(edges);
-    
-    
-    
   });
-  
 }
