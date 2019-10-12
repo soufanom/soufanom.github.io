@@ -9,34 +9,30 @@ function sleep(milliseconds) {
   }
 }
 
-function initNet(){
-      var sigInst = new sigma({
-      renderers: [
-          {
-              container: document.getElementById('container'),
-              type: 'canvas' // sigma.renderers.canvas works as well
-          }
-      ],
-      settings: {
-        defaultNodeColor: '#989898',
-        defaultLabelSize: 11,
-        minNodeSize: 0,
-        maxNodeSize: 25,
-        animationsTime: 1000
-      }
-  });
-  return sigInst;
-}
-
 function traverseNet(){
   var sigInst;
-  sigInst = initNet();
   var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
-  viewNet(sigInst, state);
+  viewNet(state);
 }
 
 function viewNet(sigInst, state) {
   $.getJSON('data.json', function (data) {
+    var sigInst = new sigma({
+        renderers: [
+            {
+                container: document.getElementById('container'),
+                type: 'canvas' // sigma.renderers.canvas works as well
+            }
+        ],
+        settings: {
+          defaultNodeColor: '#989898',
+          defaultLabelSize: 11,
+          minNodeSize: 0,
+          maxNodeSize: 25,
+          animationsTime: 1000
+        }
+    });
+    
     var nodes = data['nodes'];
     var edges = data['edges'];
     
@@ -49,20 +45,23 @@ function viewNet(sigInst, state) {
       sigInst.graph.addEdge(edges[j]);
     }
     
-    sigma.plugins.animate(
-        sigInst,
-        {
-          color: state
-        },
-        {
-          easing: 'cubicInOut',
-          duration: 1000
-        }
-      );
+    setInterval(function() {
+      sigma.plugins.animate(
+          sigInst,
+          {
+            color: state
+          },
+          {
+            easing: 'cubicInOut',
+            duration: 1000
+          }
+        );
+    }, 2000);
+    
 
-    var nodes = sigInst.graph.nodes();
-    var edges = sigInst.graph.edges();
-    console.log(nodes);
-    console.log(edges);
+    //var nodes = sigInst.graph.nodes();
+    //var edges = sigInst.graph.edges();
+    //console.log(nodes);
+    //console.log(edges);
   });
 }
