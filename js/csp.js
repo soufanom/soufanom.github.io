@@ -42,7 +42,7 @@ function viewNet(sigInst, state) {
     
     for (var i = 0; i < nodes.length; i++) {
       var nd = nodes[i];
-      nd.color = state[i];
+      nd.color = '#989898';
       sigInst.graph.addNode(nd);
     }
     for (var j = 0; j < edges.length; j++) {
@@ -60,7 +60,7 @@ function viewNet(sigInst, state) {
           duration: 1000
         }
       );
-    
+    sigInst.refresh();
     var nodes = sigInst.graph.nodes();
     var edges = sigInst.graph.edges();
     console.log(nodes);
