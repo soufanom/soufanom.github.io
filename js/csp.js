@@ -9,61 +9,38 @@ function sleep(milliseconds) {
   }
 }
 
-function traverseNet(){
-  var sigInst;
-  var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
-  viewNet(state);
-}
-
-
-
-function viewNet(state) {
-  $.getJSON('data.json', function (data) {
-    var sigInst = new sigma({
-        renderers: [
-            {
-                container: document.getElementById('container'),
-                type: 'canvas' // sigma.renderers.canvas works as well
-            }
-        ],
-        settings: {
-          defaultNodeColor: '#989898',
-          defaultLabelSize: 11,
-          minNodeSize: 0,
-          maxNodeSize: 25,
-          animationsTime: 1000
-        }
-    });
-    
-    var nodes = data['nodes'];
-    var edges = data['edges'];
-    
-    for (var i = 0; i < nodes.length; i++) {
-      var nd = nodes[i];
-      nd.color = '#989898';
-      sigInst.graph.addNode(nd);
-    }
-    for (var j = 0; j < edges.length; j++) {
-      sigInst.graph.addEdge(edges[j]);
-    }
-    
-    setInterval(function() {
-      sigma.plugins.animate(
-          sigInst,
+function traverseNet(g){
+  // Instantiate sigma:  
+  var s = new sigma({
+      renderers: [
           {
-            color: state
-          },
-          {
-            easing: 'cubicInOut',
-            duration: 1000
+              container: document.getElementById('container'),
+              graph: g,
+              type: 'canvas' // sigma.renderers.canvas works as well
           }
-        );
-    }, 2000);
-    
+      ],
+      settings: {
+        defaultNodeColor: '#989898',
+        defaultLabelSize: 11,
+        minNodeSize: 0,
+        maxNodeSize: 25,
+        animationsTime: 1000
+      });
+  
 
-    //var nodes = sigInst.graph.nodes();
-    //var edges = sigInst.graph.edges();
-    //console.log(nodes);
-    //console.log(edges);
-  });
+  var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
+    
+   setInterval(function() {
+    sigma.plugins.animate(
+        s,
+        {
+          color: state
+        },
+        {
+          easing: 'cubicInOut',
+          duration: 1000
+        }
+      );
+  }, 2000);
+  
 }
