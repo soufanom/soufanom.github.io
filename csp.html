@@ -29,9 +29,15 @@
         </style>
     </head>
     <body>
-        <a href="#" id="backtrack" style="margin-left: 35%;" onclick="testGraphColoring()" class="myButton">Backtrack (forward-check)</a>
-        <a href="#" id="backtrack"  onclick="initMap()" class="myButton">Refresh</a>
+        <div style="padding-top: 20px">
+            <a href="#" id="backtrack" style="margin-left: 26%;" onclick="btGraphColoring()" class="myButton">Backtrack search</a>
+            <a href="#" id="backtrack" onclick="btfcGraphColoring()" class="myButton">Backtrack search (forward-check)</a>
+            <a href="#" id="backtrack" onclick="initMap()" class="myButton">Refresh</a>
+        </div>
         <div style="padding-top: 90px" id="container"></div>
+        <div id="stepsdiv" style="padding-left: 35%">
+            <p id="steps" style="font-size:17px;"></p>
+        </div>
         <script src="js/sigma.min.js"></script>
         <script src="js/jquery.min.js"></script>
         <script src="js/csp.js"></script>
@@ -42,6 +48,7 @@
   
           function initMap(){
                 viewMap(['#989898', '#989898', '#989898', '#989898', '#989898', '#989898']);
+                document.getElementById('steps').innerHTML = '';
           }
           initMap();
         </script>
