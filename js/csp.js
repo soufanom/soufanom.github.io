@@ -14,12 +14,16 @@ function traverseNet(sigInst) {
     var nodes = data['nodes'];
     var edges = data['edges'];
     for (var i = 0; i < nodes.length; i++) {
-      sigInst.graph.addNode(nodes[i]);
+      var nd = nodes[i];
+      nd.color = 'red';
+      sigInst.graph.addNode(nd);
     }
     for (var j = 0; j < edges.length; j++) {
       sigInst.graph.addEdge(edges[j]);
     }
-
+    sigInst.refresh();
+    
+    sleep(5000);
     sigInst.graph.nodes().forEach(function (n) {
       n.color = colors[1];
       sigInst.refresh();
