@@ -1,3 +1,14 @@
+var colors = ['red', 'green', 'blue'];
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
 function traverseNet(sigInst) {
   $.getJSON('data.json', function (data) {
     var nodes = data['nodes'];
@@ -10,11 +21,18 @@ function traverseNet(sigInst) {
     }
 
     sigInst.graph.nodes().forEach(function (n) {
-      n.color = 'red';
+      n.color = colors[1];
+      sigInst.refresh();
+      sleep(1000);
     });
     
+    var nodes = sigInst.graph.nodes();
+    var edges = sigInst.graph.edges;
+    console.log(nodes);
+    console.log(edges);
     
-    sigInst.refresh();
+    
+    
   });
   
 }
