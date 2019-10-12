@@ -30,7 +30,7 @@ function traverseNet(g){
   
   var s = new sigma({
     graph: g,
-    container: 'graph'
+    container: 'container'
   });
 
   
