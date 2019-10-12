@@ -14,16 +14,33 @@
 <script src="js/sigma.parsers.json.min.js"></script>
 <script src="js/csp.js"></script>
 <script>
-  sigma.parsers.json('data.json', {
-    container: 'container',
-    settings: {
+    var s = new sigma({
+      renderers: [
+          {
+              container: document.getElementById('container'),
+              type: 'canvas' // sigma.renderers.canvas works as well
+          }
+      ],
+      settings: {
       defaultNodeColor: '#989898',
       defaultLabelSize: 11,
       minNodeSize: 0,
       maxNodeSize: 0
-    }
+      }
   });
-  traverseNet();
+  
+  $.getJSON('data.json', function (data) {
+    var nodes = data['nodes'];
+    var edges = data['edges'];
+    for (var i = 0; i < nodes.length; i++) {
+      sigInst.graph.addNode(nodes[i]);
+    }
+    for (var j = 0; j < edges.length; j++) {
+      sigInst.graph.addEdge(edges[j]);
+    }
+  }
+
+  traverseNet(s);
 </script>
 </body>
 </html>
