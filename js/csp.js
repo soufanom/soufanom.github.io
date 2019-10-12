@@ -9,19 +9,39 @@ function sleep(milliseconds) {
   }
 }
 
+function initNet(){
+      var sigInst = new sigma({
+      renderers: [
+          {
+              container: document.getElementById('container'),
+              type: 'canvas' // sigma.renderers.canvas works as well
+          }
+      ],
+      settings: {
+      defaultNodeColor: '#989898',
+      defaultLabelSize: 11,
+      minNodeSize: 0,
+      maxNodeSize: 25
+      }
+  });
+  return sigInst;
+}
+
 function traverseNet(sigInst){
+  initNet();
   var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
   viewNet(sigInst, state);
   sleep(2000);
+  initNet()
   var state = ['red', 'red', 'red', 'blue', 'green', 'red'];
   viewNet(sigInst, state);
   sleep(2000);
+  initNet()
   var state = ['blue', 'blue', 'blue', 'blue', 'green', 'red'];
   viewNet(sigInst, state);
 }
 
 function viewNet(sigInst, state) {
-  sigInst.graph.clear();
   $.getJSON('data.json', function (data) {
     var nodes = data['nodes'];
     var edges = data['edges'];
