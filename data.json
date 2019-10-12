@@ -5,35 +5,35 @@
       "label": "Western Australia",
       "x": 0,
       "y": 1,
-      "size": 10
+      "size": 30
     },
     {
       "id": "NT",
       "label": "Northern Territory",
       "x": 1,
       "y": -1.5,
-      "size": 10
+      "size": 30
     },
     {
       "id": "SA",
       "label": "South Australia",
       "x": 1,
       "y": 2,
-      "size": 10
+      "size": 30
     },
     {
       "id": "QLD",
       "label": "Queensland",
       "x": 3,
       "y": -1,
-      "size": 10
+      "size": 30
     },
     {
       "id": "NSW",
       "label": "New South Wales",
       "x": 3,
       "y": 1,
-      "size": 10
+      "size": 30
     },
     {
       "id": "VIC",
