@@ -1,42 +1,93 @@
 {
   "nodes": [
     {
-      "id": "n0",
-      "label": "A node",
+      "id": "WA",
+      "label": "Western Australia",
       "x": 0,
       "y": 0,
-      "size": 3
+      "size": 5
     },
     {
-      "id": "n1",
-      "label": "Another node",
-      "x": 3,
-      "y": 1,
-      "size": 2
-    },
-    {
-      "id": "n2",
-      "label": "And a last one",
+      "id": "NT",
+      "label": "northern territory",
       "x": 1,
-      "y": 3,
-      "size": 1
+      "y": -2,
+      "size": 5
+    },
+    {
+      "id": "SA",
+      "label": "South Australia",
+      "x": 1,
+      "y": 2,
+      "size": 5
+    },
+    {
+      "id": "QLD",
+      "label": "Queensland",
+      "x": 3,
+      "y": -2,
+      "size": 5
+    },
+    {
+      "id": "NSW",
+      "label": "New South Wales",
+      "x": 3,
+      "y": 0,
+      "size": 5
+    },
+    {
+      "id": "VIC",
+      "label": "Victoria",
+      "x": 3,
+      "y": 2,
+      "size": 5
     }
   ],
   "edges": [
     {
       "id": "e0",
-      "source": "n0",
-      "target": "n1"
+      "source": "WA",
+      "target": "NT"
     },
     {
       "id": "e1",
-      "source": "n1",
-      "target": "n2"
+      "source": "WA",
+      "target": "SA"
     },
     {
       "id": "e2",
-      "source": "n2",
-      "target": "n0"
+      "source": "NT",
+      "target": "SA"
+    },
+    {
+      "id": "e3",
+      "source": "NT",
+      "target": "QLD"
+    },
+    {
+      "id": "e4",
+      "source": "QLD",
+      "target": "SA"
+    },
+    {
+      "id": "e5",
+      "source": "SA",
+      "target": "NSW"
+    },
+    {
+      "id": "e6",
+      "source": "SA",
+      "target": "VIC"
+    },
+    {
+      "id": "e7",
+      "source": "QLD",
+      "target": "NSW"
+    },
+    {
+      "id": "e8",
+      "source": "NSW",
+      "target": "VIC"
     }
   ]
 }
