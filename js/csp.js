@@ -33,16 +33,6 @@ function traverseNet(){
   sigInst = initNet();
   var state = ['red', 'green', 'green', 'blue', 'green', 'green'];
   viewNet(sigInst, state);
-  sleep(2000);
-  sigInst.graph.clear(); sigInst = null;
-  sigInst = initNet();
-  var state = ['red', 'red', 'red', 'blue', 'green', 'red'];
-  viewNet(sigInst, state);
-  sleep(2000);
-  sigInst.graph.clear(); sigInst = null;
-  sigInst = initNet();
-  var state = ['blue', 'blue', 'blue', 'blue', 'green', 'red'];
-  viewNet(sigInst, state);
 }
 
 function viewNet(sigInst, state) {
