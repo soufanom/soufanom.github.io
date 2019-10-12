@@ -1,43 +1,50 @@
 <html>
-<head>
-<style type="text/css">
-  #container {
-    max-width: 700px;
-    height: 500px;
-    margin: auto;
-  }
-</style>
-</head>
-<body>
-<div style="padding-top: 90px" id="container"></div>
-<script src="js/jquery.min.js"></script>
-<script src="js/sigma.min.js"></script>	
-<script src="js/sigma.parsers.json.min.js"></script>
-<script src="js/sigma.plugins.animate.js"></script> 
-<script src="js/csp.js"></script>
-<script>
-  var i,
-      s,
-      g = {
-        nodes: [],
-        edges: []
-      };
-
-  // Generate graph:
-  g.nodes.push({id: "WA", label: "Western Australia", x: 0, y: 1, size: 20, color: '#989898'});
-  g.nodes.push({id: "NT", label: "Northern Territory", x: 1, y: -1.5, size: 20, color: '#989898'});
-  g.nodes.push({id: "QLD", label: "Queensland", x: 3, y: -1, size: 20, color: '#989898'});
-  g.nodes.push({id: "NSW", label: "New South Wales", x: 3, y: 1, size: 20, color: '#989898'});
-  g.nodes.push({id: "VIC", label: "Victoria", x: 3, y: 3, size: 20, color: '#989898'});
-  g.nodes.push({id: "SA", label: "South Australia", x: 1, y: 2, size: 20, color: '#989898'});
-  //edges
-  g.edges.push({id: "e0", source: "WA", target: "NT"}); g.edges.push({id: "e1", source: "WA", target: "SA"});
-  g.edges.push({id: "e2", source: "NT", target: "SA"}); g.edges.push({id: "e3", source: "NT", target: "QLD"});
-  g.edges.push({id: "e4", source: "QLD", target: "SA"}); g.edges.push({id: "e5", source: "SA", target: "NSW"});
-  g.edges.push({id: "e6", source: "SA", target: "VIC"}); g.edges.push({id: "e7", source: "QLD", target: "NSW"});
-  g.edges.push({id: "e8", source: "NSW", target: "VIC"});
+    <head>
+        <style type="text/css">
+          #container {
+                max - width: 700px;
+                height: 500px;
+                margin: auto;
+          }
+        .myButton {
+                background - color:#7892c2;
+                border - radius:28px;
+                border:1px solid #4e6096;
+                display:inline - block;
+                cursor:pointer;
+                color:#ffffff;
+                font - family:Arial;
+                font - size:17px;
+                padding:16px 31px;
+                text - decoration:none;
+                text - shadow:0px 1px 0px #283966;
+        }
+        .myButton:hover {
+                background - color:#476e9e;
+        }
+        .myButton:active {
+                position:relative;
+                top:1px;
+        }
+        </style>
+    </head>
+    <body>
+        <a href="#" id="backtrack" style="margin-left: 35%;" onclick="testGraphColoring()" class="myButton">Backtrack (forward-check)</a>
+        <a href="#" id="backtrack"  onclick="initMap()" class="myButton">Refresh</a>
+        <div style="padding-top: 90px" id="container"></div>
+        <script src="js/sigma.min.js"></script>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/csp.js"></script>
+        <script>
   
-  traverseNet(g);
-</script>
-</body>
+          //traverseNet(g);
+          //DFS("WA", g2);
+  
+          function initMap(){
+                viewMap(['#989898', '#989898', '#989898', '#989898', '#989898', '#989898']);
+          }
+          initMap();
+        </script>
+
+    </body>
 </html>
