@@ -67,7 +67,7 @@ function viewNet(sigInst, state) {
         },
         {
           easing: 'cubicInOut',
-          duration: 300
+          duration: 1000
         }
       );
     
