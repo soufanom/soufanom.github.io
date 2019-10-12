@@ -1,4 +1,6 @@
 function traverseNet() {
   var s = new sigma('container');
-  console.log(s);
+  sigInst.graph.nodes().forEach(function (n) {
+    console.log(n);
+  });
 }
