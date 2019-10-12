@@ -1,47 +1,4 @@
-//var colors = ['red', 'green', 'blue'];
 var colors = ['#e7453c', '#3aa757', '#4688f1'];
-
-function wait(ms) {
-    var start = Date.now(),
-            now = start;
-    while (now - start < ms) {
-        now = Date.now();
-    }
-}
-
-var i;
-var state;
-function traverseNet(g) {
-
-    state = ['#e7453c', '#e7453c', '#3aa757', '#4688f1', '#e7453c', '#3aa757'];
-    i = 0;
-    var interval = null;
-    $(document).on('ready', function () {
-        interval = setInterval(function changeColors(s) {
-            console.log(i);
-            if (i < 6) {
-                s = new sigma({
-                    graph: g,
-                    container: 'container',
-                    settings: {
-                        defaultNodeColor: '#989898',
-                        defaultLabelSize: 11,
-                        minNodeSize: 0,
-                        maxNodeSize: 25
-                    }
-                });
-                s.refresh();
-                s.graph.nodes()[i].color = state[i];
-                s.refresh();
-                i++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 1000);
-    });
-
-}
-
 var s = null;
 function viewMap(state) {
     var i,
@@ -165,7 +122,40 @@ class Map {
         return false;
     }
 
-    graphColouring(m) {
+    // A recursive utility function to solve m 
+    // coloring  problem 
+    // m: number of colors or domain size
+    // color: assigned colors array for each node (current state)
+    graphColourUtil2(m, color, v) {
+        // base case: when the last node is reached
+        if (v === this.V) {
+            return true;
+        }
+
+        for (var i = 0; i < m; i++) {
+            var c = colors[i]
+
+			color[v] = c
+	                console.log(color);
+                this.solution.push([...color]);
+            if (this.isSafe(v, color, c)) {
+                //backtrack-step: put 0 back to the assignment
+                break
+            }
+            	console.log(color);
+                this.solution.push([...color]);
+        }
+                                    /* recur to assign colors to rest of the vertices */
+                if (this.graphColourUtil2(m, color, v + 1)) {
+                    return true;
+                }
+
+        /* If no color can be assigned to this vertex 
+         then return false */
+        return false;
+    }
+    
+    graphColouringBTFC(m) {
         var color = []
         for (var i = 0; i < this.V; i++) {
             color.push('#989898')
@@ -182,9 +172,26 @@ class Map {
         return this.solution;
     }
 
+    graphColouringBT(m) {
+        var color = []
+        for (var i = 0; i < this.V; i++) {
+            color.push('#989898')
+        }
+
+        if (!(this.graphColourUtil2(m, color, 0))) {
+            console.log("No solution");
+            return false
+        }
+
+        // Print the solution 
+        console.log(color)
+
+        return this.solution;
+    }
+
 }
 
-function testGraphColoring() {
+function btGraphColoring() {
     //nodes in order: WA, NT, SA, QLD, NSW, VIC
     graph = [[0, 1, 1, 0, 0, 0],
         [1, 0, 1, 1, 0, 0],
@@ -195,21 +202,48 @@ function testGraphColoring() {
     g = new Map(6, graph);
     m = 3
     colors = shuffle(colors)
-    var solution = g.graphColouring(m)
+    var solution = g.graphColouringBT(m)
 
     i = 0;
     var interval = null;
-    console.log(solution)
 
     interval = setInterval(function changeColors(s) {
         if (i < solution.length) {
-            console.log(solution[i])
-            viewMap(solution[i])
+            viewMap(solution[i]);
             i++;
+            document.getElementById('steps').innerHTML = 'Number of steps is: '+i;
         } else {
             clearInterval(interval);
         }
-    }, 1000);
+    }, 750);
+
+}
+
+function btfcGraphColoring() {
+    //nodes in order: WA, NT, SA, QLD, NSW, VIC
+    graph = [[0, 1, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 0],
+        [1, 1, 1, 1, 1, 1],
+        [0, 1, 1, 0, 1, 0],
+        [0, 0, 1, 1, 0, 1],
+        [0, 0, 1, 0, 1, 0]]
+    g = new Map(6, graph);
+    m = 3
+    colors = shuffle(colors)
+    var solution = g.graphColouringBTFC(m)
+
+    i = 0;
+    var interval = null;
+
+    interval = setInterval(function changeColors(s) {
+        if (i < solution.length) {
+            viewMap(solution[i]);
+            i++;
+            document.getElementById('steps').innerHTML = 'Number of steps is: '+i;
+        } else {
+            clearInterval(interval);
+        }
+    }, 750);
 
 }
 
