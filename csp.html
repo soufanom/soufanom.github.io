@@ -15,7 +15,7 @@
 <script src="js/sigma.parsers.json.min.js"></script>
 <script src="js/csp.js"></script>
 <script>
-    var s = new sigma({
+    var sigInst = new sigma({
       renderers: [
           {
               container: document.getElementById('container'),
@@ -41,7 +41,7 @@
     }
   });
 
-  traverseNet(s);
+  traverseNet(sigInst);
 </script>
 </body>
 </html>
