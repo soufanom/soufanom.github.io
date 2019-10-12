@@ -14,15 +14,16 @@
 <script src="js/sigma.parsers.json.min.js"></script>
 <script src="js/csp.js"></script>
 <script>
-  sigma.parsers.json('data.json', {
+  var s = sigma.parsers.json('data.json', {
     container: 'container',
     settings: {
       defaultNodeColor: '#989898',
       defaultLabelSize: 11,
+      minNodeSize: 10,
       maxNodeSize: 10
     }
   });
-  traverseNet();
+  traverseNet(s);
 </script>
 </body>
 </html>
