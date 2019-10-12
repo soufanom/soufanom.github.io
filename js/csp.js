@@ -15,7 +15,7 @@ function traverseNet(){
   viewNet(state);
 }
 
-function viewNet(sigInst, state) {
+function viewNet(state) {
   $.getJSON('data.json', function (data) {
     var sigInst = new sigma({
         renderers: [
