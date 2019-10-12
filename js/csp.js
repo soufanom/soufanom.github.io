@@ -8,10 +8,13 @@ function traverseNet(sigInst) {
     for (var j = 0; j < edges.length; j++) {
       sigInst.graph.addEdge(edges[j]);
     }
-    sigInst.refresh();
+
     sigInst.graph.nodes().forEach(function (n) {
-      console.log(n);
-    });    
+      n.color = 'red';
+    });
+    
+    
+    sigInst.refresh();
   });
   
 }
