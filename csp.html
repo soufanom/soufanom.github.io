@@ -15,7 +15,27 @@
 <script src="js/sigma.parsers.json.min.js"></script>
 <script src="js/csp.js"></script>
 <script>
-  traverseNet();
+  var i,
+      s,
+      g = {
+        nodes: [],
+        edges: []
+      };
+
+  // Generate graph:
+  g.nodes.push({id: "WA", label: "Western Australia", x: 0, y: 1, size: 20, color: '#989898'});
+  g.nodes.push({id: "NT", label: "Northern Territory", x: 1, y: -1.5, size: 20, color: '#989898'});
+  g.nodes.push({id: "QLD", label: "Queensland", x: 3, y: -1, size: 20, color: '#989898'});
+  g.nodes.push({id: "NSW", label: "New South Wales", x: 3, y: 1, size: 20, color: '#989898'});
+  g.nodes.push({id: "VIC", label: "Victoria", x: 3, y: 3, size: 20, color: '#989898'});
+  //edges
+  g.edges.push({id: "e0", source: "WA", target: "NT"}); g.edges.push({id: "e1", source: "WA", target: "SA"});
+  g.edges.push({id: "e2", source: "NT", target: "SA"}); g.edges.push({id: "e3", source: "NT", target: "QLD"});
+  g.edges.push({id: "e4", source: "QLD", target: "SA"}); g.edges.push({id: "e5", source: "SA", target: "NSW"});
+  g.edges.push({id: "e6", source: "SA", target: "VIC"}); g.edges.push({id: "e7", source: "QLD", target: "NSW"});
+  g.edges.push({id: "e8", source: "NSW", target: "VIC"});
+  
+  traverseNet(g);
 </script>
 </body>
 </html>
