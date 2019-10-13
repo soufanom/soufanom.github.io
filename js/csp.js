@@ -91,6 +91,17 @@ class Map {
         return true;
     }
 
+    isNaiveSafe(color) {
+        for (var i = 0; i < this.V; i++) {
+            for (var j = (i + 1); j < this.V; j++) {
+                if ((this.graph[i][j] === 1) && (color[i] === color[j])) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // A recursive utility function to solve m 
     // coloring  problem 
     // m: number of colors or domain size
@@ -155,6 +166,49 @@ class Map {
         return false;
     }
 
+    // A recursive utility function to solve m 
+    // coloring  problem 
+    // m: number of colors or domain size
+    // color: assigned colors array for each node (current state)
+    graphColourUtil3(m, state, i, v) {
+        // base case: when the last node is reached
+        console.log(state);
+        this.solution.push([...state]);
+        if (this.isNaiveSafe(state)) {
+            return true;
+        } else if (v >= this.V) {
+            return true;
+        } else if (i === m) {
+            return true;
+        }
+
+        state[v] = colors[i]
+        this.graphColourUtil3(m, state, i, v + 1);
+        this.graphColourUtil3(m, state, i, v + 2);
+        this.graphColourUtil3(m, state, i + 1, v);
+        this.graphColourUtil3(m, state, i + 1, v + 1);
+
+        return false;
+
+    }
+
+    naiveColoring(m) {
+        var color = []
+        for (var i = 0; i < this.V; i++) {
+            color.push('#989898')
+        }
+
+        if (!(this.graphColourUtil3(m, color, 0, 0))) {
+            console.log("No solution");
+            return this.solution;
+        }
+
+        // Print the solution 
+        console.log(color)
+
+        return this.solution;
+    }
+
     graphColouringBTFC(m) {
         var color = []
         for (var i = 0; i < this.V; i++) {
@@ -172,7 +226,7 @@ class Map {
         return this.solution;
     }
 
-    graphColouringBT(m) {
+    stepsColoring(m) {
         var color = []
         for (var i = 0; i < this.V; i++) {
             color.push('#989898')
@@ -191,7 +245,7 @@ class Map {
 
 }
 
-function btGraphColoring() {
+function naiveGraphColoring() {
     //nodes in order: WA, NT, SA, QLD, NSW, VIC
     graph = [[0, 1, 1, 0, 0, 0],
         [1, 0, 1, 1, 0, 0],
@@ -202,7 +256,7 @@ function btGraphColoring() {
     g = new Map(6, graph);
     m = 3
     colors = shuffle(colors)
-    var solution = g.graphColouringBT(m)
+    var solution = g.naiveColoring(m)
 
     i = 0;
     var interval = null;
@@ -212,6 +266,34 @@ function btGraphColoring() {
             viewMap(solution[i]);
             i++;
             document.getElementById('steps').innerHTML = 'Number of steps is: ' + i;
+        } else {
+            clearInterval(interval);
+        }
+    }, 100);
+
+}
+
+function stepsGraphColoring() {
+    //nodes in order: WA, NT, SA, QLD, NSW, VIC
+    graph = [[0, 1, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 0],
+        [1, 1, 1, 1, 1, 1],
+        [0, 1, 1, 0, 1, 0],
+        [0, 0, 1, 1, 0, 1],
+        [0, 0, 1, 0, 1, 0]]
+    g = new Map(6, graph);
+    m = 3
+    colors = shuffle(colors)
+    var solution = g.stepsColoring(m)
+
+    i = 0;
+    var interval = null;
+
+    interval = setInterval(function changeColors(s) {
+        if (i < solution.length) {
+            viewMap(solution[i]);
+            i++;
+            //document.getElementById('steps').innerHTML = 'Number of steps is: ' + i;
         } else {
             clearInterval(interval);
         }
@@ -246,6 +328,22 @@ function btfcGraphColoring() {
     }, 750);
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
