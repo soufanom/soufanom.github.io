@@ -30,8 +30,9 @@
     </head>
     <body>
         <div style="padding-top: 20px">
-            <a href="#" id="backtrack" style="margin-left: 26%;" onclick="btGraphColoring()" class="myButton">Backtrack search</a>
-            <a href="#" id="backtrack" onclick="btfcGraphColoring()" class="myButton">Backtrack search (forward-check)</a>
+            <a href="#" id="backtrack" style="margin-left: 23%;" onclick="naiveGraphColoring()" class="myButton">Naive search (partial for illustration) </a>
+            <a href="#" id="backtrack" onclick="btfcGraphColoring()" class="myButton">Backtrack search</a>
+            <a href="#" id="backtrack" onclick="stepsGraphColoring()" class="myButton">Backtrack search (step-by-step)</a>
             <a href="#" id="backtrack" onclick="initMap()" class="myButton">Refresh</a>
         </div>
         <div style="padding-top: 90px" id="container"></div>
