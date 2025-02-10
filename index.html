@@ -554,13 +554,158 @@
     </ul>
 </div>
 
-<h2>Part 3: Inspecting Small Somatic Variants in the Tumor Sample</h2>
+    <h2>Part 3: Advanced Germline Variant Analysis</h2>
 
 
 <h3>Loading the Tumor Sample</h3>
 <p>Load tumor.bam the same way you loaded normal.bam. You can resize the tracks by dragging the horizontal line between samples.</p>
 
-<h3>Examining Somatic SNVs</h3>
+
+<div class="content-section">
+    <h2>Understanding Germline Variants</h2>
+
+    <div class="variant-guide">
+        <h3>Types of Germline Variants</h3>
+        <table class="variant-table">
+            <tr>
+                <th>Variant Type</th>
+                <th>Description</th>
+                <th>Visual Characteristics in IGV</th>
+                <th>Key Metrics</th>
+            </tr>
+            <tr>
+                <td>Heterozygous SNPs</td>
+                <td>Single base changes where one allele differs from reference</td>
+                <td>
+                    <ul>
+                        <li>~50% of reads show alternate allele</li>
+                        <li>Both alleles present in similar proportions</li>
+                        <li>Consistent pattern across reads</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>~50% allele frequency</li>
+                        <li>High base quality scores</li>
+                        <li>Present in dbSNP track</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Homozygous SNPs</td>
+                <td>Single base changes where both alleles differ from reference</td>
+                <td>
+                    <ul>
+                        <li>All reads show alternate allele</li>
+                        <li>Uniform pattern across reads</li>
+                        <li>Strong signal quality</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>~100% allele frequency</li>
+                        <li>High base qualities</li>
+                        <li>Often found in dbSNP</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Germline Indels</td>
+                <td>Small insertions or deletions inherited from parents</td>
+                <td>
+                    <ul>
+                        <li>Consistent gaps in alignment</li>
+                        <li>Clear breakpoints</li>
+                        <li>Even distribution on both strands</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <li>Clean alignment patterns</li>
+                        <li>Consistent positioning</li>
+                        <li>Support from paired reads</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="example-box">
+        <h3>Example 1: Analyzing Heterozygous SNPs</h3>
+        <p>Navigate to <span class="coordinate">chr9:130619733-130620308</span></p>
+        
+        <h4>Analysis Steps:</h4>
+        <ol class="step-by-step">
+            <li>Examine allele distribution
+                <ul>
+                    <li>Look for roughly equal numbers of reference and alternate alleles</li>
+                    <li>Check for consistent coverage across the region</li>
+                    <li>Verify balanced strand representation</li>
+                </ul>
+            </li>
+            <li>Assess quality metrics
+                <ul>
+                    <li>Verify high base quality scores (solid colors)</li>
+                    <li>Check mapping quality (minimal gray reads)</li>
+                    <li>Examine surrounding sequence alignment</li>
+                </ul>
+            </li>
+            <li>Validate with dbSNP
+                <ul>
+                    <li>Confirm presence in dbSNP track</li>
+                    <li>Check population frequency data</li>
+                    <li>Look for any clinical annotations</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="example-box">
+        <h3>Example 2: Homozygous Variant Analysis</h3>
+        <p>Navigate to <span class="coordinate">chr9:130555407-130556072</span></p>
+        
+        <h4>Key Analysis Points:</h4>
+        <ul>
+            <li>Coverage Pattern
+                <ul>
+                    <li>Check for consistent depth</li>
+                    <li>Verify uniform alternate allele presence</li>
+                    <li>Look for clean alignment patterns</li>
+                </ul>
+            </li>
+            <li>Quality Assessment
+                <ul>
+                    <li>Confirm high base qualities</li>
+                    <li>Check mapping quality scores</li>
+                    <li>Examine paired-end read support</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="example-box">
+        <h3>Practice Exercises: Germline Variant Identification</h3>
+        <ol>
+            <li>Heterozygous SNP Analysis
+                <ul>
+                    <li>Navigate to <span class="coordinate">chr9:130619733-130620308</span></li>
+                    <li>Calculate allele frequencies</li>
+                    <li>Document quality metrics</li>
+                    <li>Compare with dbSNP information</li>
+                </ul>
+            </li>
+            <li>Homozygous Variant Exercise
+                <ul>
+                    <li>Navigate to <span class="coordinate">chr9:130555407-130556072</span></li>
+                    <li>Confirm variant characteristics</li>
+                    <li>Evaluate supporting evidence</li>
+                    <li>Check population databases</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+</div>
+
 <p>Navigate to <span class="coordinate">chr9:130633300-130633965</span></p>
 
 <div class="analysis-questions">
