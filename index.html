@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGV Tutorial: Viewing Cancer Alignments</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --bg-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --border-radius: 8px;
+            --box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--text-color);
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .attribution {
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 1rem 0;
+            text-align: center;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .attribution p {
+            margin: 0;
+            color: var(--text-color);
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-color);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            background: linear-gradient(120deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .navigation-tip, .analysis-tip, .visualization-tip {
+            background: white;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid var(--accent-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            box-shadow: var(--box-shadow);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 1.5rem 0;
+            border: 1px solid #eee;
+        }
+
+        .coordinate {
+            font-family: 'Fira Code', monospace;
+            background: var(--bg-color);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+
+        .variant-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+        }
+
+        .variant-table th, .variant-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #eee;
+        }
+
+        .variant-table th {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .variant-table tr:nth-child(even) {
+            background: var(--bg-color);
+        }
+
+        .exercises {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 2rem 0;
+        }
+
+        .exercises h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.25rem;
+            }
+        }
+        
+        h1, h2, h3 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+        }
+        
+        .note {
+            background-color: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .requirements {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: Monaco, Consolas, 'Courier New', monospace;
+        }
+        
+        .coordinate {
+            font-family: monospace;
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        .navigation-tip {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+        
+        .file-download {
+            background-color: #f1f8ff;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Viewing Cancer Alignments in IGV</h1>
+    </div>
+
+    <div class="attribution">
+        <p>This workshop material was adapted and modified by Dr. Othman Soufan and Dr. Wail Ba-alawi from the original HTS IGV lab by Sorana Morrissy, which was previously updated by Heather Gibling for the Cancer Analysis workshop.</p>
+    </div>
+
+    <div class="content-section">
+        <h2>Introduction</h2>
+    
+    <p>Welcome to the lab for Genome Visualization! This lab will introduce you to the Integrative Genomics Viewer (IGV), a powerful desktop application for viewing many kinds of genomic data, including data for DNA sequencing, RNA sequencing, microarrays, epigenetics, and copy number alteration. It is one of the most popular visualization tools for high throughput sequencing (HTS) data.</p>
+
+    <h3>After this lab, you will be able to:</h3>
+    <ul>
+        <li>Very quickly navigate around the genome</li>
+        <li>Visualize HTS read alignments</li>
+        <li>Examine SNP calls and structural re-arrangements by eye</li>
+        <li>Tell the difference between germline and somatic variants</li>
+    </ul>
+
+    <div class="note">
+        <h3>Things to know before you start:</h3>
+        <ul>
+            <li>The lab may take between 1-2 hours, depending on your familiarity with genome browsing.</li>
+            <li>Don't worry if you don't complete the lab! It is available for you to complete later.</li>
+            <li>There are thought-provoking Questions or Notes pertaining to sections of the lab. These are optional but help you better understand the visualizations.</li>
+        </ul>
+    </div>
+
+    <h2>Requirements</h2>
+    <div class="requirements">
+        <ul>
+            <li>Integrative Genomics Viewer (IGV v2.9 recommended)</li>
+            <li>Ability to run Java</li>
+        </ul>
+    </div>
+
+    <h2>Data Set for IGV</h2>
+    <div class="file-download">
+        <p>These bams are a sneak peek of the ones you will be creating in module 3. They are renal cancer tumor-normal matched pairs from the CageKid project.</p>
+        <ul>
+            <li>normal.zip</li>
+            <li>tumor.zip</li>
+        </ul>
+        <p>Download the files to your computer in one directory (folder) and unzip them. Remember where you saved them!</p>
+    </div>
+
+    <h2>Part 1: Getting Familiar with IGV</h2>
+    
+    <h3>The IGV Interface</h3>
+    <img src="/api/placeholder/800/400" alt="IGV Interface Overview showing menus, toolbar, and main viewing area">
+    
+    <div class="navigation-tip">
+        <h4>Interface Components:</h4>
+        <ul>
+            <li>Menus - File, Genomes, View, etc.</li>
+            <li>Toolbar - Common actions and navigation</li>
+            <li>Genome ruler - Shows position and scale</li>
+            <li>Track names - Labels for loaded data</li>
+            <li>Data panel - Main viewing area</li>
+        </ul>
+    </div>
+
+    <h3>Loading a Genome and Data Tracks</h3>
+    <img src="/api/placeholder/800/300" alt="IGV Genome Selection Dropdown">
+    <p>By default, IGV loads Human hg19 as the reference genome. You can change the genome using the dropdown menu in the upper-left.</p>
+
+    <h4>Loading Additional Tracks</h4>
+    <p>We will load additional tracks from Server (File -> Load from Server):</p>
+    <ul>
+        <li>GC Percentage</li>
+        <li>dbSNP 1.4.7</li>
+    </ul>
+    <img src="/api/placeholder/800/600" alt="Loading tracks from server dialog">
+
+    <h3>Navigation</h3>
+    <img src="/api/placeholder/800/100" alt="Chromosome selection view">
+    <p>You should see a listing of chromosomes in this reference genome. Click on chromosome 1.</p>
+    
+    <div class="navigation-tip">
+        <p>Navigate to <span class="coordinate">chr1:10,000-11,000</span> by entering this into the location field and clicking Go or pressing Enter.</p>
+    </div>
+    <img src="/api/placeholder/800/400" alt="IGV view of the specified region">
+
+    <!-- Sequence View Section -->
+    <h3>Understanding the Sequence View</h3>
+    <img src="/api/placeholder/800/200" alt="DNA sequence view colored by base">
+    <p>IGV displays the sequence of letters in a genome as a sequence of colors (e.g. A = green). This makes repetitive sequences easy to identify.</p>
+
+    <!-- Continue with more sections including all 21 images -->
+    <h3>Gene Navigation</h3>
+    <p>You can navigate to a gene of interest by typing it in the same box the genomic coordinates are in and pressing Enter. Try it for your favorite gene, or BRCA1 if you can't decide.</p>
+    <img src="/api/placeholder/800/200" alt="BRCA1 gene view">
+
+    <!-- Part 2: Inspecting Small Variants -->
+    
+<h2>Understanding Variant Types</h2>
+
+<div class="variant-guide">
+    <h3>Types of Genomic Variants</h3>
+    <table class="variant-table">
+        <tr>
+            <th>Variant Type</th>
+            <th>Description</th>
+            <th>Visual Characteristics in IGV</th>
+            <th>Key Metrics</th>
+        </tr>
+        <tr>
+            <td>SNPs (Single Nucleotide Polymorphisms)</td>
+            <td>Single base changes present in normal population</td>
+            <td>
+                <ul>
+                    <li>Colored bases in alignment tracks</li>
+                    <li>Usually supported by reads in both directions</li>
+                    <li>Typically high base quality scores</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>~50% allele frequency for heterozygous</li>
+                    <li>~100% for homozygous</li>
+                    <li>Present in dbSNP track</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Somatic SNVs</td>
+            <td>Single base mutations unique to tumor</td>
+            <td>
+                <ul>
+                    <li>Present in tumor, absent in normal</li>
+                    <li>May show allele frequency imbalance</li>
+                    <li>Clean alignment pattern</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Variable allele frequencies</li>
+                    <li>Usually not in dbSNP</li>
+                    <li>High base qualities</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Small Indels</td>
+            <td>Small insertions or deletions</td>
+            <td>
+                <ul>
+                    <li>Gaps in alignment</li>
+                    <li>I/D symbols in reads</li>
+                    <li>Alignment breaks</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li>Look for consistent breakpoints</li>
+                    <li>Check both strands</li>
+                    <li>Examine soft-clipping</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h2>Part 2: Inspecting Small Variants in the Normal Sample</h2>
+
+    
+    <h3>Loading Read Alignments</h3>
+    <p>Choose File > Load from File and select normal.bam. Note that both the .bam and .bai files must be in the same directory.</p>
+    <img src="/api/placeholder/800/400" alt="Loading BAM file dialog">
+
+    
+
+<h3>Visualizing Read Alignments</h3>
+<p>Navigate to a narrow window on chromosome 9: <span class="coordinate">chr9:130,620,912-130,621,487</span></p>
+
+<div class="visualization-tip">
+    <h4>Customizing the View</h4>
+    <p>Right-click on the track name (normal.bam) and select these options:</p>
+    <ul>
+        <li>Sort alignments by start location</li>
+        <li>Group alignments by pair orientation</li>
+    </ul>
+</div>
+
+<img src="/api/placeholder/800/400" alt="Customized alignment view showing sorted and grouped reads">
+
+<div class="note">
+    <h4>Understanding the Display:</h4>
+    <ul>
+        <li>Grey/white bars represent reads aligned to the reference genome</li>
+        <li>Reads are pointed to indicate their orientation</li>
+        <li>Colored bases indicate mismatches with the reference</li>
+        <li>Base quality is shown by the transparency of mismatched bases</li>
+    </ul>
+</div>
+
+<h3>Read Information</h3>
+<p>Mouse over or click on any read to see detailed information:</p>
+<img src="/api/placeholder/800/300" alt="Read information popup showing quality metrics">
+
+<div class="interactive-tip">
+    <p>Toggle between hover and click display by selecting the yellow box at the top of the window.</p>
+</div>
+
+
+
+<h3>Advanced Variant Interpretation</h3>
+
+<div class="interpretation-guide">
+    <h4>Structural Variants - Key Patterns</h4>
+    
+    <div class="variant-type">
+        <h5>1. Deletions</h5>
+        <ul>
+            <li>Visual Indicators:
+                <ul>
+                    <li>Increased insert size between paired reads (shown in red)</li>
+                    <li>Drop in coverage</li>
+                    <li>Reads with soft-clipping at breakpoints</li>
+                </ul>
+            </li>
+            <li>Validation Points:
+                <ul>
+                    <li>Check both breakpoints for clean edges</li>
+                    <li>Look for consistent insert sizes</li>
+                    <li>Verify coverage drop matches deletion size</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="variant-type">
+        <h5>2. Duplications</h5>
+        <ul>
+            <li>Visual Indicators:
+                <ul>
+                    <li>Decreased insert size (often shown in blue)</li>
+                    <li>Increased coverage</li>
+                    <li>Read pairs pointing away from each other</li>
+                </ul>
+            </li>
+            <li>Validation Points:
+                <ul>
+                    <li>Check coverage increase (2x for heterozygous, 3x for homozygous)</li>
+                    <li>Look for consistent breakpoint patterns</li>
+                    <li>Examine read pair orientations</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="variant-type">
+        <h5>3. Inversions</h5>
+        <ul>
+            <li>Visual Indicators:
+                <ul>
+                    <li>Read pairs in same orientation (both F or both R)</li>
+                    <li>Distinct color patterns when colored by pair orientation</li>
+                    <li>Normal coverage but abnormal read pairing</li>
+                </ul>
+            </li>
+            <li>Validation Points:
+                <ul>
+                    <li>Check both breakpoints</li>
+                    <li>Look for consistent read pair patterns</li>
+                    <li>Verify normal coverage levels</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="quality-metrics">
+    <h4>Quality Assessment Guidelines</h4>
+    <ul>
+        <li>Base Quality:
+            <ul>
+                <li>High quality: Solid colors in mismatched bases</li>
+                <li>Low quality: Transparent or faded colors</li>
+                <li>Look for consistency across multiple reads</li>
+            </ul>
+        </li>
+        <li>Mapping Quality:
+            <ul>
+                <li>Check for clusters of low-mapping quality reads</li>
+                <li>Be cautious of variants in repetitive regions</li>
+                <li>Look for balanced coverage on both strands</li>
+            </ul>
+        </li>
+        <li>Coverage Patterns:
+            <ul>
+                <li>Even coverage suggests reliable regions</li>
+                <li>Sudden drops or spikes may indicate artifacts</li>
+                <li>Compare with GC content track</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<h2>Part 3: Inspecting Small Somatic Variants in the Tumor Sample</h2>
+
+
+<h3>Loading the Tumor Sample</h3>
+<p>Load tumor.bam the same way you loaded normal.bam. You can resize the tracks by dragging the horizontal line between samples.</p>
+
+<h3>Examining Somatic SNVs</h3>
+<p>Navigate to <span class="coordinate">chr9:130633300-130633965</span></p>
+
+<div class="analysis-questions">
+    <h4>Questions to Consider:</h4>
+    <ol>
+        <li>How many SNVs are present in each sample?</li>
+        <li>What is the variant allele frequency for the extra SNV in the tumor sample?</li>
+        <li>How might this frequency have reached this level?</li>
+    </ol>
+</div>
+
+<img src="/api/placeholder/800/400" alt="Comparison view of normal and tumor samples showing SNVs">
+
+<h3>Somatic SNP with Changed Heterozygosity</h3>
+<p>Navigate to <span class="coordinate">chr9:130515234-130515399</span> and sort alignments by base</p>
+
+<div class="analysis-tip">
+    <h4>Analysis Steps:</h4>
+    <ol>
+        <li>Compare variant allele frequencies between samples</li>
+        <li>Consider why these frequencies might differ</li>
+        <li>Look for patterns in read orientation and quality</li>
+    </ol>
+</div>
+
+<h2>Part 4: Inspecting Structural Variants in NA12878</h2>
+
+<p>Cancers often have large structural variants, including:</p>
+<ul>
+    <li>Inversions</li>
+    <li>Duplications</li>
+    <li>Translocations</li>
+</ul>
+
+<div class="setup-instructions">
+    <h4>Preparation:</h4>
+    <ol>
+        <li>Remove the coverage and alignment tracks for both tumor and normal samples</li>
+        <li>Go to File > Load from server</li>
+        <li>Expand Platinum Genomes</li>
+        <li>Select NA12878</li>
+    </ol>
+</div>
+
+<h3>Examining an Inversion</h3>
+<p>Navigate to <span class="coordinate">chrX:14728136-14732366</span></p>
+
+<div class="visualization-settings">
+    <h4>Apply these viewing adjustments:</h4>
+    <ul>
+        <li>Select "View as pairs"</li>
+        <li>Group alignments by pair orientation</li>
+        <li>Color alignments by pair orientation</li>
+        <li>Sort alignments by start location</li>
+    </ul>
+</div>
+
+<img src="/api/placeholder/800/400" alt="Inversion visualization showing paired-end read patterns">
+
+<div class="analysis-questions">
+    <h4>Key Observations:</h4>
+    <ol>
+        <li>What do you notice about the blue and teal reads at the top?</li>
+        <li>How does "View as pairs" help understand this is an inversion?</li>
+        <li>Is this inversion heterozygous or homozygous?</li>
+    </ol>
+</div>
+
+<h3>Large Deletion Example</h3>
+<p>Navigate to <span class="coordinate">chr7:39811931-39833535</span></p>
+
+<div class="visualization-settings">
+    <h4>Settings:</h4>
+    <ul>
+        <li>Color alignments by insert size</li>
+        <li>Sort by start location</li>
+    </ul>
+</div>
+
+<img src="/api/placeholder/800/400" alt="Large deletion showing insert size patterns">
+
+<div class="analysis-questions">
+    <h4>Analysis Points:</h4>
+    <ol>
+        <li>What do the red read pairs indicate?</li>
+        <li>Which other track helps confirm this is a deletion?</li>
+        <li>Estimate the size of the deletion</li>
+    </ol>
+</div>
+
+<h2>Practice Exercises</h2>
+
+<div class="exercises">
+    <h3>Exercise 1: Finding SNPs</h3>
+    <p>Navigate to <span class="coordinate">chr9:130619733-130620308</span> and answer:</p>
+    <ul>
+        <li>Which variants are heterozygous vs homozygous?</li>
+        <li>What are the variant allele frequencies?</li>
+    </ul>
+
+    <h3>Exercise 2: Analyzing Structural Variants</h3>
+    <p>Navigate to <span class="coordinate">chr17:55080031-55081661</span> and:</p>
+    <ul>
+        <li>Identify the type of structural variant</li>
+        <li>Document the evidence supporting your conclusion</li>
+    </ul>
+</div>
+
+<h2>Troubleshooting Tips</h2>
+
+<div class="troubleshooting">
+    <h3>Common Issues:</h3>
+    <ul>
+        <li>If reads don't appear, check that both .bam and .bai files are in the same directory</li>
+        <li>For performance issues, try reducing the number of tracks displayed</li>
+        <li>If the view seems incorrect, verify you're using the correct reference genome</li>
+    </ul>
+</div>
+
+
+
+    <h2>Resources</h2>
+    <ul>
+        <li><a href="http://software.broadinstitute.org/software/igv/UserGuide" target="_blank">IGV User Manual</a></li>
+        <li><a href="http://software.broadinstitute.org/software/igv/interpreting_pair_orientations" target="_blank">Understanding Pair Orientations</a></li>
+        <li><a href="http://software.broadinstitute.org/software/igv/interpreting_insert_size" target="_blank">Understanding Insert Size</a></li>
+    </ul>
+
+</body>
+</html>
